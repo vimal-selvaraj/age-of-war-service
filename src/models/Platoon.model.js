@@ -11,22 +11,24 @@ class Platoon{
         return advantageMapList[this.unitClass]?.includes(otherPlatoon?.unitClass);
     }
 
-    getStrength(otherPlatoon,advantageMap={}){
-        return this.soldierCount * (this.hasAdvantageOverOtherPlatoons(otherPlatoon,advantageMap) ? 2 : 1)
+    getStrength(otherPlatoon,terrain){
+       let strength = this.soldierCount * (this.hasAdvantageOverOtherPlatoons(otherPlatoon,advantageMap) ? 2 : 1)
+       return strength * terrain.getAdditionalStrength(this.unitClass)
+
     }
 
-    outcomeAgainstOtherPlatoon(otherPlatoon,advantageMap){
-        const myStrength = this.getStrength(otherPlatoon,advantageMap);
-        const opponentStrength = otherPlatoon.soldierCount;
-
-        if(myStrength>opponentStrength){
-            return "win";
-        }else if(myStrength<opponentStrength){
-            return "loss";
-        }else{
-            return "draw";
-        }
-    }
+    // outcomeAgainstOtherPlatoon(otherPlatoon){
+    //     const myStrength = this.getStrength(otherPlatoon)
+    //     const opponentStrength = otherPlatoon.soldierCount;
+       
+    //     if(myStrength>opponentStrength) {
+    //         return "win";
+    //     }else if(myStrength<opponentStrength){
+    //         return "loss";
+    //     }else{
+    //         return "draw";
+    //     }
+    // }
 
     toString() {
         return `${this.soldierCount} ${this.unitClass}`;

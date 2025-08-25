@@ -2,14 +2,14 @@ const battleService = require("../services/battle.services");
 
 function commenceBattle(req, res) {
     console.log(`Recieved new request ${req?.url}`);
-    const { myArmyStr, opponentArmyStr, advantageMap, firstOccurenceOnly } = req.body;
+    const { myArmyStr, opponentArmyStr, terrain, advantageMap, firstOccurenceOnly } = req.body;
 
     if (!myArmyStr || !opponentArmyStr) {
         return res.status(400).json({ error: "myArmyStr and opponentArmyStr are required" });
     }
 
     try {
-        const results = battleService.findWinningArrangements(myArmyStr, opponentArmyStr, advantageMap, firstOccurenceOnly);
+        const results = battleService.findWinningArrangements(myArmyStr, opponentArmyStr, terrain, advantageMap, firstOccurenceOnly);
         if (!results) {
             return res.status(200).json({ statusText:"ok",message: "There is no chance of winning",data: null });
         }
